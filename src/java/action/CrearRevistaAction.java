@@ -60,6 +60,8 @@ public class CrearRevistaAction extends org.apache.struts.action.Action {
         } else {
             CrearRevistaActionForm formBean = (CrearRevistaActionForm) form;
             String rutaWEBINF = formBean.getRutaNumeros();
+            
+            System.out.println("RUTA= " + rutaWEBINF);
 
             //Se crean el pdf de todos los articulos correspondientes
             String numero = consultaListaNumeros(rutaWEBINF);
@@ -95,7 +97,7 @@ public class CrearRevistaAction extends org.apache.struts.action.Action {
             }
 
             String nameServer = request.getContextPath();
-            String urlNumeros = "www.moleqla.es";//nameServer + "/revista/work/work.do";
+            String urlNumeros = "http://moleqla.upo.es:8080/revista/work/work.do";//nameServer + "/revista/work/work.do";
             String asunto = Constantes.getEMAIL_ASUNTO_NUMERO_PUBLICADO();
             String texto = Constantes.getEMAIL_TEXTO_NUMERO_PUBLICADO(urlNumeros);
 
