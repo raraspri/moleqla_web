@@ -43,7 +43,7 @@ public class Constantes {
     private static final String EMAIL_EXIST = "This email already exists";
 
     private static final String EMAIL_ASUNTO = "Welcome to MoleQla";
-    private static final String EMAIL_URL_LOGO = "http://www.upo.es/moleqla/export/system/modules/es.upo.moleqla.aquigar/resources/images/logos_seccion/logo1.jpg";
+    private static final String EMAIL_URL_LOGO = "https://www.upo.es/moleqla/export/system/modules/es.upo.moleqla.aquigar/resources/images/logos_seccion/logo1.jpg";
 
     //Contactar
     private static String EMAIL_TEXTO_CONTACT;
@@ -263,7 +263,7 @@ public class Constantes {
                     + "<br />If you wish to change your data...";
         }
 
-        cad += "<br />Go to this url and login with your credentials <a href=\"localhost:8069/web\">Odoo</a>";
+        cad += "<br />Go to this url and login with your credentials <a href=\"moleqla.upo.es:8069/web\">Odoo</a>";
         return cad;
     }
 
