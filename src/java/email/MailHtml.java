@@ -1,12 +1,10 @@
 package email;
 
-import java.io.File;
 import java.util.Properties;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -14,13 +12,12 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import utilidades.Constantes;
-import utilidades.OS;
 
 public class MailHtml {
 
     private InternetAddress[] addressTo;
 
-    public static void enviarMailHtmlFile(String rutaImg, File archivoAdjunto, String usuarioDestinatario, String textoEmail, String asunto) {
+    /*public static void enviarMailHtmlFile(String rutaImg, File archivoAdjunto, String usuarioDestinatario, String textoEmail, String asunto) {
         try {
             Properties props = new Properties();
             props.put("mail.smtp.host", "smtp.gmail.com");
@@ -76,22 +73,24 @@ public class MailHtml {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static boolean enviarMailHtml(String usuarioDestinatario, String textoEmail, String asunto) {
         boolean ok = false;
-        try {
-            Properties props = new Properties();
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.setProperty("mail.smtp.starttls.enable", "true");
-            props.setProperty("mail.smtp.port", "587");
-            props.setProperty("mail.smtp.user", Constantes.getEMAIL_NOTIFICA());
-            props.setProperty("mail.smtp.password", Constantes.getEMAIL_NOTIFICA_PASS());
-            props.setProperty("mail.smtp.auth", "true");
+        Properties props = new Properties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
 
-            Session session = Session.getDefaultInstance(props, null);
-            // session.setDebug(true);
+        Session session = Session.getInstance(props,
+          new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Constantes.getEMAIL_NOTIFICA(), Constantes.getEMAIL_NOTIFICA_PASS());
+            }
+          });
 
+        try {            
             // Header email             
             String logo = Constantes.getEMAIL_URL_LOGO();
             String cabecera = "<img src=\""+logo+ ""+"\" width=\"250\" height=\"100\"/> <br />";
@@ -106,23 +105,21 @@ public class MailHtml {
             // Una MultiParte para agrupar texto e imagen.
             MimeMultipart multiParte = new MimeMultipart();
             multiParte.addBodyPart(html);
-
-            // Se compone el correo, dando to, from, subject y el
-            // contenido.
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(props.getProperty("mail.smtp.user")));
-            message.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress(usuarioDestinatario));
+            
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Constantes.getEMAIL_NOTIFICA()));
+            message.setRecipients(Message.RecipientType.TO,
+                InternetAddress.parse(usuarioDestinatario));
+            
             message.setSubject(asunto);
             message.setContent(multiParte);
 
-            // Se envia el correo.
-            Transport t = session.getTransport("smtp");
-            t.connect(props.getProperty("mail.smtp.user"), props.getProperty("mail.smtp.password"));
-            t.sendMessage(message, message.getAllRecipients());
-            t.close();
+            Transport.send(message);
 
-            ok = true;
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
         } catch (Exception e) {
             System.out.println("\n" + e.getMessage()
                     + "\n-----------------\n"
@@ -130,7 +127,6 @@ public class MailHtml {
                     + "\n-----------------\n"
                     + "Email: " + usuarioDestinatario + "\n");
         }
-
         return ok;
     }
 }

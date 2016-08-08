@@ -251,7 +251,7 @@ public class Constantes {
                     + "<li> Name: " + nombre + "</li>"
                     + "<li> First surname: " + apellido1 + "</li>"
                     + "<li> Password: " + pass + "</li>"
-                    + "<br />If you wish to change your data...";
+                    + "<br />If you want to change your data has to access the application settings";
         } else {
             cad = "Welcome to MoleQla <b>" + nombre + " " + apellido1 + " " + apellido2 + "</b>. <br />"
                     + "Your data are:"
@@ -260,10 +260,10 @@ public class Constantes {
                     + "<li> First surname: " + apellido1 + "</li>"
                     + "<li> Second surname: " + apellido2 + "</li>"
                     + "<li> Password: " + pass + "</li>"
-                    + "<br />If you wish to change your data...";
+                    + "<br />If you want to change your data has to access the application settings";
         }
 
-        cad += "<br />Go to this url and login with your credentials <a href=\"moleqla.upo.es:8069/web\">Odoo</a>";
+        cad += "<br />Go to this url and login with your credentials <a href=\"https://moleqla.upo.es/web\">MoleQla</a>";
         return cad;
     }
 
