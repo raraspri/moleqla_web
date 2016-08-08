@@ -90,7 +90,8 @@ public class MailHtml {
             }
           });
 
-        try {            
+        try {   
+            
             // Header email             
             String logo = Constantes.getEMAIL_URL_LOGO();
             String cabecera = "<img src=\""+logo+ ""+"\" width=\"250\" height=\"100\"/> <br />";
