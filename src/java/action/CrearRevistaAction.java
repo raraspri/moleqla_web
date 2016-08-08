@@ -97,7 +97,7 @@ public class CrearRevistaAction extends org.apache.struts.action.Action {
             }
 
             String nameServer = request.getContextPath();
-            String urlNumeros = "http://moleqla.upo.es:8080/revista/work/work.do";//nameServer + "/revista/work/work.do";
+            String urlNumeros = "https://moleqla.upo.es/revista/work/work.do";//nameServer + "/revista/work/work.do";
             String asunto = Constantes.getEMAIL_ASUNTO_NUMERO_PUBLICADO();
             String texto = Constantes.getEMAIL_TEXTO_NUMERO_PUBLICADO(urlNumeros);
 
